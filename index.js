@@ -10,7 +10,7 @@ app.use(express.json());
 dotenv.config();
 
 const Port = process.env.PORT || 5000;
-const Link = process.env.URL;
+//const Link = process.env.URL;
 
 
 app.get("/", (req, res) => {
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.get("/nse", async (req, res) => {
   try {
     const data = [];
-    const response = await fetch(Link);
+    const response = await fetch('https://afx.kwayisi.org/nse/');
     const body = await response.text();
     const $ = cheerio.load(body);
 
@@ -47,6 +47,7 @@ app.get("/nse", async (req, res) => {
     console.log("Data scrapped successfully");
   } catch (error) {
     console.error({ message: error.message });
+    res.status(400).json({message: error.message});
   }
 });
 
